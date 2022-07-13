@@ -83,6 +83,7 @@ class AuthController {
                         res.status(200).json({ ...others, accessToken })
                     }
                 })
+                .catch(next)
         } catch (error) {
             res.status(403).json(error)
         }
