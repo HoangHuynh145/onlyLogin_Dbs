@@ -36,7 +36,7 @@ const io = new ios.Server({
 db.connect()
 
 // init route
-router(app)
+router(io)
 const port = process.env.PORT || 8000
 
 
