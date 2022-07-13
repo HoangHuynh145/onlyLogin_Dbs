@@ -14,12 +14,7 @@ app.use(express.json());
 const whitelist = ['http://localhost:3000'];
 const corsOptions = {
     credentials: true, // This is important.
-    origin: (origin, callback) => {
-        if (whitelist.includes(origin))
-            return callback(null, true)
-
-        callback(new Error('Not allowed by CORS'));
-    }
+    origin: "http://localhost:3000"
 }
 app.use(cors(corsOptions));
 
@@ -29,7 +24,6 @@ db.connect()
 // init route
 router(app)
 const port = process.env.PORT || 8000
-
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
