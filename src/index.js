@@ -8,7 +8,7 @@ const app = express()
 app.use(express.urlencoded({
     extended: true,
 }))
-app.use(cors({credentials: true, origin: 'https://magnificent-queijadas-ad3ace.netlify.app'}));
+app.use(cors({credentials: true, origin: 'https://fanciful-creponne-4b9888.netlify.app'}));
 app.use(cookieParser());
 app.use(express.json());
 
