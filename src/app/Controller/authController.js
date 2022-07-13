@@ -41,11 +41,10 @@ class AuthController {
                 email: req.body.email,
                 password: hashed,
             });
-
             //Save user to DB
             newUser.save()
                 .then(user => res.status(200).json(user))
-                .catch(err => res.json(err))
+                .catch(next)
         } catch (err) {
             res.status(403).json(err);
         }
@@ -73,19 +72,21 @@ class AuthController {
                         const refreshToken = generateRefreshToken(user)
                         refreshTokens.push(refreshToken)
                         // add cookies
-                        const rsCk = res.cookie('refreshToken', refreshToken, {
+                        res.cookie('refreshToken', refreshToken, {
                             httpOnly: true,
-                            secure: true,
-                            sameSite: 'None'
+                            secure: false,
+                            path: "/",
+                            sameSite: "strict"
                         })
-                        console.log("saved: ", rsCk)
+                        console.log('Cookie added')
                         // tránh trả về password (._doc để parse)
                         const { password, ...others } = user._doc
                         res.status(200).json({ ...others, accessToken })
                     }
                 })
-                .catch(next)
+                .catch(err => res.json(err))
         } catch (error) {
+            console.log(error)
             res.status(403).json(error)
         }
     }
@@ -94,13 +95,10 @@ class AuthController {
     refreshUser = async (req, res, next) => {
         // lấy ra refresh token
         const refreshToken = req.cookies.refreshToken
-        console.log(req.cookies)
-
         if (!refreshToken) {
             return res.status(403).json('You are not authenticated')
         }
         if (!refreshTokens.includes(refreshToken)) {
-            console.log('Vo 101')
             return res.status(403).json('Token is not valid')
         }
         jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY, (err, user) => {
@@ -114,8 +112,9 @@ class AuthController {
                 // lưu refresh token mới vào cookie
                 res.cookie('refreshToken', newRefreshToken, {
                     httpOnly: true,
-                    secure: true,
-                    sameSite: 'None'
+                    secure: false,
+                    path: "/",
+                    sameSite: "strict"
                 })
                 refreshTokens.push(newRefreshToken)
                 return res.status(200).json({ accessToken: newAccessToken })
