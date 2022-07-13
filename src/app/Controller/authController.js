@@ -22,6 +22,12 @@ const generateRefreshToken = (user) => {
 let refreshTokens = []
 
 class AuthController {
+
+    //[GET] /v1/auth/test
+    test(req, res, next) {
+        res.send('test')
+    }
+
     // [POST] /v1/auth/register
     registerUser = async (req, res, next) => {
         try {
