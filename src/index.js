@@ -8,7 +8,7 @@ const app = express()
 app.use(express.urlencoded({
     extended: true,
 }))
-app.use(cors({credentials: true, origin: 'https://only-login.herokuapp.com'}));
+app.use(cors({credentials: true, origin: 'https://magnificent-queijadas-ad3ace.netlify.app'}));
 app.use(cookieParser());
 app.use(express.json());
 
