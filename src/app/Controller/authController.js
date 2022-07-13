@@ -73,11 +73,13 @@ class AuthController {
                         const refreshToken = generateRefreshToken(user)
                         refreshTokens.push(refreshToken)
                         // add cookies
-                        res.cookie('refreshToken', refreshToken, {
+                        const rsCk = res.cookie('refreshToken', refreshToken, {
+                            signed: true,
                             httpOnly: true,
                             secure: true,
                             sameSite: 'None'
                         })
+                        console.log("Saved: ", rsCk)
                         // tránh trả về password (._doc để parse)
                         const { password, ...others } = user._doc
                         res.status(200).json({ ...others, accessToken })
@@ -93,6 +95,7 @@ class AuthController {
     refreshUser = async (req, res, next) => {
         // lấy ra refresh token
         const refreshToken = req.cookies.refreshToken
+        console.log(req)
 
         if (!refreshToken) {
             return res.status(403).json('You are not authenticated')
@@ -111,6 +114,7 @@ class AuthController {
                 const newRefreshToken = generateRefreshToken(user)
                 // lưu refresh token mới vào cookie
                 res.cookie('refreshToken', newRefreshToken, {
+                    signed: true,
                     httpOnly: true,
                     secure: true,
                     sameSite: 'None'
