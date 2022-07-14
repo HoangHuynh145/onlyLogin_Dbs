@@ -15,6 +15,7 @@ app.use(cors({
     credentials: true
 }));
 
+
 // connect to db
 db.connect()
 

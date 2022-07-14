@@ -72,13 +72,13 @@ class AuthController {
                         const refreshToken = generateRefreshToken(user)
                         refreshTokens.push(refreshToken)
                         // add cookies
-                        const rsCk = await res.cookie('refreshToken', refreshToken, {
+                        await res.cookie('refreshToken', refreshToken, {
                             httpOnly: true,
                             secure: true,
                             path: "/",
-                            sameSite: "Strict"
+                            sameSite: "None"
                         })
-                        console.log('Cookie added', rsCk)
+                        console.log('Cookie added')
                         // tránh trả về password (._doc để parse)
                         const { password, ...others } = user._doc
                         res.status(200).json({ ...others, accessToken })
@@ -114,7 +114,7 @@ class AuthController {
                     httpOnly: true,
                     secure: true,
                     path: "/",
-                    sameSite: "Strict"
+                    sameSite: "None"
                 })
                 refreshTokens.push(newRefreshToken)
                 return res.status(200).json({ accessToken: newAccessToken })
