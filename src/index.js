@@ -10,13 +10,10 @@ app.use(express.urlencoded({
 }))
 app.use(cookieParser());
 app.use(express.json());
-
-const whitelist = ['http://localhost:3000'];
-const corsOptions = {
-    credentials: true, // This is important.
-    origin: "http://localhost:3000"
-}
-app.use(cors(corsOptions));
+app.use(cors({
+    origin: true, 
+    credentials: true
+}));
 
 // connect to db
 db.connect()
