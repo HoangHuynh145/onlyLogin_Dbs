@@ -9,7 +9,7 @@ const generateAccessToken = (user) => {
     return (jwt.sign({
         id: user.id,
         admin: user.admin,
-    }, process.env.JWT_ACCESS_KEY, { expiresIn: '10s' }))
+    }, process.env.JWT_ACCESS_KEY, { expiresIn: '10m' }))
 }
 
 const generateRefreshToken = (user) => {
