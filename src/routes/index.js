@@ -6,7 +6,7 @@ function route(app) {
     app.use('/v1/auth', authRoutes)
     app.use('/v1/user', userRoutes)
 
-    app.use('/', authRoutes)
+    app.use('/', siteRoutes)
 }
 
 module.exports = route
